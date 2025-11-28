@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #000000;
+  color: #c4c4db;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+
+.cx-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #222;
+}
+
+.cx-logo {
+  font-weight: 700;
+}
+
+.cx-world-name {
+  font-size: 12px;
+  color: #9a9aaf;
+}
+
+/* Worlds selector */
+
+.cx-worlds {
+  display: flex;
+  overflow-x: auto;
+  padding: 6px 8px;
+  gap: 8px;
+  border-bottom: 1px solid #222;
+}
+
+.cx-world-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #c4c4db;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.cx-world-pill--active {
+  border-color: #c4c4db;
+}
+
+/* Tabs */
+
+.cx-tabs {
+  display: flex;
+  border-bottom: 1px solid #222;
+}
+
+.cx-tab {
+  flex: 1;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 14px;
+}
+
+.cx-tab--active {
+  color: #c4c4db;
+  border-bottom: 2px solid #c4c4db;
+}
+
+/* Content */
+
+.cx-content {
+  flex: 1;
+  padding: 10px 12px 60px;
+}
+
+.cx-card {
+  border-radius: 12px;
+  border: 1px solid #222;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: #050506;
+}
+
+.cx-card-title {
+  font-weight: 600;
+}
+
+.cx-card-sub {
+  font-size: 12px;
+  color: #9a9aaf;
+}
+
+/* Buttons */
+
+.cx-btn-primary {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #c4c4db;
+  color: #000;
+  font-size: 12px;
+}
+
+/* Bottom */
+
+.cx-bottom {
+  position: sticky;
+  bottom: 0;
+  padding: 8px 12px;
+  border-top: 1px solid #222;
+  background: #000;
+  font-size: 12px;
+  color: #9a9aaf;
+}
