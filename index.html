@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CollectX MiniApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Наши стили -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Верхняя панель -->
+      <header class="cx-header">
+        <div class="cx-logo">CollectX</div>
+        <div class="cx-world-name" id="currentWorldName">Выбери мир</div>
+      </header>
+
+      <!-- Горизонтальный выбор миров -->
+      <div class="cx-worlds" id="worldsContainer">
+        <!-- Пока просто заглушки, потом подставим из backend -->
+        <button class="cx-world-pill cx-world-pill--active">Cyber Cats</button>
+        <button class="cx-world-pill">Pixel Punks</button>
+      </div>
+
+      <!-- Табы Home / Market -->
+      <div class="cx-tabs">
+        <button class="cx-tab cx-tab--active" data-tab="home">Home</button>
+        <button class="cx-tab" data-tab="market">Market</button>
+      </div>
+
+      <!-- Основной контент -->
+      <main class="cx-content" id="content">
+        <!-- Здесь будем менять контент по вкладке -->
+      </main>
+
+      <!-- Нижняя панель / статус -->
+      <footer class="cx-bottom">
+        <span id="userBalance">Баланс: — X</span>
+      </footer>
+    </div>
+
+    <!-- Логика mini app -->
+    <script>
+      // Инициализация Telegram WebApp
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+      }
+
+      const content = document.getElementById("content");
+      const worldNameEl = document.getElementById("currentWorldName");
+      const tabs = document.querySelectorAll(".cx-tab");
+      const worlds = document.querySelectorAll(".cx-world-pill");
+
+      let currentTab = "home";
+      let currentWorld = "Cyber Cats";
+
+      // Стартовый рендер
+      render();
+
+      // Переключение табов
+      tabs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          tabs.forEach((b) => b.classList.remove("cx-tab--active"));
+          btn.classList.add("cx-tab--active");
+          currentTab = btn.dataset.tab;
+          render();
+        });
+      });
+
+      // Переключение миров (пока просто по названию)
+      worlds.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          worlds.forEach((b) => b.classList.remove("cx-world-pill--active"));
+          btn.classList.add("cx-world-pill--active");
+          currentWorld = btn.textContent.trim();
+          worldNameEl.textContent = currentWorld;
+          render();
+        });
+      });
+
+      function render() {
+        content.innerHTML = "";
+
+        if (currentTab === "home") {
+          renderHome();
+        } else if (currentTab === "market") {
+          renderMarket();
+        }
+      }
+
+      function renderHome() {
+        const card = document.createElement("div");
+        card.className = "cx-card";
+        card.innerHTML = `
+          <div class="cx-card-title">${currentWorld}</div>
+          <div class="cx-card-sub">
+            Это каркас экрана Home. Здесь позже будут мир, сцена, коллекции и квесты этого паблика.
+          </div>
+        `;
+        content.appendChild(card);
+
+        // Заглушки квестов
+        const quests = [
+          { title: "Подпишись на канал", reward: "+10 XP" },
+          { title: "Сделай репост поста", reward: "+5 XP" },
+          { title: "Купи любой предмет на маркете", reward: "+20 XP" }
+        ];
+
+        quests.forEach((q) => {
+          const c = document.createElement("div");
+          c.className = "cx-card";
+          c.innerHTML = `
+            <div class="cx-card-title">${q.title}</div>
+            <div class="cx-card-sub">Награда: ${q.reward}</div>
+          `;
+          content.appendChild(c);
+        });
+      }
+
+      function renderMarket() {
+        // Пока просто мок-товары, позже подменим на реальные с backend
+        const items = [
+          { name: "Neon Cat #1", rarity: "Rare", price: 50 },
+          { name: "Neon Cat #2", rarity: "Epic", price: 120 },
+          { name: "Pixel Punk #1", rarity: "Common", price: 20 }
+        ];
+
+        items.forEach((item) => {
+          const c = document.createElement("div");
+          c.className = "cx-card";
+          c.innerHTML = `
+            <div class="cx-card-title">${item.name}</div>
+            <div class="cx-card-sub">${item.rarity} • ${item.price} X</div>
+          `;
+          const btn = document.createElement("button");
+          btn.className = "cx-btn-primary";
+          btn.textContent = "Купить (заглушка)";
+          btn.addEventListener("click", () => {
+            alert("Покупка пока фейковая. Потом тут будет запрос к backend 🙂");
+          });
+          c.appendChild(btn);
+          content.appendChild(c);
+        });
+      }
+    </script>
+  </body>
+</html>
